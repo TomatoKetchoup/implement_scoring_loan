@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  build_deployment_api:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,3 +16,13 @@ jobs:
           heroku_app_name: "scoring_loan_tomatoketchoup" #Must be unique in Heroku
           heroku_email: "anne.desmedt@gmx.fr"
           heroku_appdir: 'api'
+  build_deployment_dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "dahsboard_scoring_loan_tomatoketchoup" #Must be unique in Heroku
+          heroku_email: "anne.desmedt@gmx.fr"
+          heroku_appdir: 'dashboard'
