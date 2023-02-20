@@ -2,12 +2,13 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import pandas as pd
 
-# class User_input(BaseModel):
-#     id_client : int
-df = pd.read_csv('C:/Users/td/implement_scoring_loan/notebook/data.csv')
+
+class User_input(BaseModel):
+    customer : int
+
 app = FastAPI()
 
 @app.post('/gender')
-def prediction():
-    result=df[df['SK_ID_CURR']==100002]['CODE_GENDER'].astype(float)
-    return result
+def prediction(input:User_input):
+    # result = df[df['SK_ID_CURR']==input.customer]['CODE_GENDER'].astype(float)
+    return {'gender':0}
