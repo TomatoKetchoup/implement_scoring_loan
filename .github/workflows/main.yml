@@ -17,6 +17,7 @@ jobs:
           heroku_email: "anne.desmedt@gmx.fr"
           appdir: 'api'
           buildpack: heroku/python
+          dontuseforce: 0
         env:
           PYTHON_RUNTIME_VERSION: 3.8.12
   build_deployment_dashboard:
@@ -30,5 +31,6 @@ jobs:
           heroku_email: "anne.desmedt@gmx.fr"
           appdir: 'dashboard'
           buildpack: heroku/python
+          dontuseforce: 0
         env:
           PYTHON_RUNTIME_VERSION: 3.8.12
