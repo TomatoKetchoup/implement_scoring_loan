@@ -136,6 +136,7 @@ openpyxl==3.0.7
 opt-einsum==3.3.0
 outdated==0.2.1
 OUtils==0.0.20
+package-name==0.1
 packaging==22.0
 pandas==1.2.4
 pandas-flavor==0.2.0
