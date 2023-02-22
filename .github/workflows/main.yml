@@ -16,7 +16,7 @@ jobs:
           heroku_app_name: "apiscoringloan-tomatoketchoup" #Must be unique in Heroku
           heroku_email: "anne.desmedt@gmx.fr"
           appdir: 'api'
-          buildpack: heroku/python
+          buildpack: heroku/pyhon
           dontuseforce: 0
         env:
           PYTHON_RUNTIME_VERSION: 3.8.12
