@@ -12,10 +12,10 @@ jobs:
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY}}
           heroku_app_name: "apiscoringloan-tomatoketchoup" #Must be unique in Heroku
           heroku_email: "anne.desmedt@gmx.fr"
-          heroku_appdir: 'api'
+          appdir: 'api'
           buildpack: heroku/python
         env:
           PYTHON_RUNTIME_VERSION: 3.8.12
@@ -25,10 +25,10 @@ jobs:
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY}}
           heroku_app_name: "dashscoringloan-tomatoketchoup" #Must be unique in Heroku
           heroku_email: "anne.desmedt@gmx.fr"
-          heroku_appdir: 'dashboard'
+          appdir: 'dashboard'
           buildpack: heroku/python
         env:
           PYTHON_RUNTIME_VERSION: 3.8.12
