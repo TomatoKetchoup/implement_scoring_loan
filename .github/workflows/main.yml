@@ -16,6 +16,9 @@ jobs:
           heroku_app_name: "apiscoringloan-tomatoketchoup" #Must be unique in Heroku
           heroku_email: "anne.desmedt@gmx.fr"
           heroku_appdir: 'api'
+          buildpack: heroku/python
+        env:
+          PYTHON_RUNTIME_VERSION: 3.8.12
   build_deployment_dashboard:
     runs-on: ubuntu-latest
     steps:
@@ -26,3 +29,6 @@ jobs:
           heroku_app_name: "dashscoringloan-tomatoketchoup" #Must be unique in Heroku
           heroku_email: "anne.desmedt@gmx.fr"
           heroku_appdir: 'dashboard'
+          buildpack: heroku/python
+        env:
+          PYTHON_RUNTIME_VERSION: 3.8.12
