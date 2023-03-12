@@ -1,23 +1,33 @@
 import streamlit as st
 import json
 import requests
+import lime
+import tempfile
+import numpy as np
+from PIL import Image
+import io
+import matplotlib.pyplot as plt
+import streamlit.components.v1 as components
+import pickle
+import pandas as pd
+import streamlit.components.v1 as components
+import html
+import json
+import streamlit as st
+
+
+
+
+# df = pd.read_csv('C:/Users/td/implement_scoring_loan/notebook/data.csv', nrows=10)
 
 st.title('🔮Dashboard 🔮')
-
 # Taking id client input
 id_client = st.text_input('Customer id')
 
-if st.button('GoGoGo'):
-    m1, m2, m3, m4 = st.columns((1, 1, 1, 1))
+
+if st.button('👉🏽 GoGoGo'):
     id_client = int(id_client)
     inputs = {"customer": id_client}
-    res = requests.post(url= ('http://127.0.0.1:8000/gender'), json = inputs)
-    gender_value = res.json()
-    st.write(f"Customer gender = {gender_value}")
-    ## Request for financial information
-    financial = requests.post(url= ('http://127.0.0.1:8000/financial'), json = inputs)
-    financial = financial.json()
-    m1.write('')
-    m2.metric(label='Customer Income', value='{:,.0f} $'.format(financial['income']['0']))
-    m3.metric(label='Customer Credit', value='{:,.0f} $'.format(financial['credit']['0']))
-    m4.metric(label='Customer Annuity', value='{:,.0f} $'.format(financial['annuity']['0']))
+    response = requests.post(url=('http://127.0.0.1:8000/local_importance'), json=inputs)
+    result = response.json()["result"]
+    st.components.v1.html(result, width=1000, height=800, scrolling=True)
