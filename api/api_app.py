@@ -31,4 +31,4 @@ def prediction(input:User_input):
     income = data_df[data_df['SK_ID_CURR']==input.customer]['AMT_INCOME_TOTAL']
     credit = data_df[data_df['SK_ID_CURR']==input.customer]['AMT_CREDIT']
     annuity =data_df[data_df['SK_ID_CURR'] == input.customer]['AMT_ANNUITY']
-
+    return {'income':income, 'credit':credit,'annuity': annuity}
