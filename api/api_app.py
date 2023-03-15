@@ -21,7 +21,7 @@ app = FastAPI()
 def process_data(input:User_input):
     index_client = data_df[data_df['SK_ID_CURR'] == input.customer]
     data_customer = data_df[features].values[index_client]
-    exp = explainer.explain_instance(index_client, model_saved.predict_proba, num_features=5, num_samples=5)
+    exp = explainer.explain_instance(index_client, model_saved.set_params(selector=None).predict_proba, num_features=5, num_samples=5)
     probabilities = model_saved.predict_proba(index_client)[0].tolist()
     html_explanation = exp.as_html(show_all=False)
     return JSONResponse(content={"result": {"probabilities": probabilities, "html_explanation": html_explanation}, "predict_proba": False})
