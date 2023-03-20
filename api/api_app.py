@@ -4,7 +4,7 @@ import pickle
 import joblib
 from pydantic import BaseModel
 app = FastAPI()
-@app.post("/hello")
+@app.get("/hello")
 def test():
     return 'hello'
 
