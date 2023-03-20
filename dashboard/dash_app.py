@@ -18,12 +18,13 @@ import streamlit as st
 from pydantic import BaseModel
 import plotly.graph_objs as go
 
-df = pd.read_csv('C:/Users/td/implement_scoring_loan/notebook/data.csv', nrows= 10)
+df = pd.read_csv('C:/Users/td/implement_scoring_loan/api/df_api.csv', nrows= 10)
 
 st.title('🔮Dashboard 🔮')
 # Taking id client input
 options = np.unique(df['SK_ID_CURR'])
 id_client = st.sidebar.selectbox('Customer id', options)
+
 st.sidebar.write('Gender')
 if df[df['SK_ID_CURR']== id_client]['CODE_GENDER'].any() == 0:
     st.sidebar.markdown('<img src="https://img.icons8.com/color/48/null/checked-user-male.png"/>',
@@ -31,6 +32,7 @@ if df[df['SK_ID_CURR']== id_client]['CODE_GENDER'].any() == 0:
 else :
     st.sidebar.markdown('<img src="https://img.icons8.com/color/48/null/checked-user-female.png"/>',unsafe_allow_html=True)
 
+url = 'http://127.0.0.1:8000/'
 
 
 if st.sidebar.button('👉🏽 GoGoGo'):
@@ -38,7 +40,7 @@ if st.sidebar.button('👉🏽 GoGoGo'):
     inputs = {"customer": id_client}
     index_client = str(df[df['SK_ID_CURR'] == id_client].index[0])
     ## Request for financial information
-    financial = requests.post(url= ('http://127.0.0.1:8000/financial'), json = inputs)
+    financial = requests.post(url= (url+'financial'), json = inputs)
     financial = financial.json()
 
     m1, m2,m3= st.columns((1, 1,1,))
@@ -48,29 +50,44 @@ if st.sidebar.button('👉🏽 GoGoGo'):
     # Define the gauge chart
     g1, g2, g3 = st.columns((1, 1, 1))
 
+    # Afficher l'histogramme pour AMT_INCOME_TOTAL
     fig_income, ax = plt.subplots()
-    ax.boxplot(df['AMT_INCOME_TOTAL'])
-    ax.set_xticklabels(['INCOME'])
+    ax.hist(df['AMT_INCOME_TOTAL'], bins=10)
+    ax.set_xlabel('INCOME')
     g1.pyplot(fig_income)
 
+    # Afficher l'histogramme pour AMT_CREDIT
     fig_credit, ax = plt.subplots()
-    ax.boxplot(df['AMT_CREDIT'])
-    ax.set_xticklabels(['CREDIT'])
+    ax.hist(df['AMT_CREDIT'], bins=10)
+    ax.set_xlabel('CREDIT')
     g2.pyplot(fig_credit)
 
+    # Afficher l'histogramme pour AMT_ANNUITY
     fig_annuity, ax = plt.subplots()
-    ax.boxplot(df['AMT_ANNUITY'])
-    ax.set_xticklabels(['ANNUNITY'])
+    ax.hist(df['AMT_ANNUITY'], bins=10)
+    ax.set_xlabel('ANNUNITY')
     g3.pyplot(fig_annuity)
 
     ## Request local feature importance
     response = requests.post(url=('http://127.0.0.1:8000/local_importance'), json=inputs)
-    result = response.json()["result"]['html_explanation']
-    result_proba = response.json()['result']['probabilities'][0]
+    result = response.json()
+    feature_names = result['features']
+    importances = result['importances']
+    df_features_importance = pd.DataFrame(list(zip(feature_names, importances)), columns=['Features', 'Importance'])
+    df_features_importance = df_features_importance.sort_values(by=['Importance'], ascending=True)
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.barh(range(len(df_features_importance)), df_features_importance['Importance'], align='center')
+    ax.set_yticks(range(len(df_features_importance)))
+    ax.set_yticklabels(df_features_importance['Features'])
+    ax.set_ylabel('Feature')
+    ax.set_xlabel('Importance')
+    ax.set_title('Feature Importances')
+    # Afficher le plot bar dans Streamlit
+    st.pyplot(fig)
+    result_proba = result['probabilities']
     fig = go.Figure(go.Indicator(
         mode="gauge+number",
-        value=result_proba,
+        value=result_proba[0],
         domain={'x': [0, 1], 'y': [0, 1]},
         title={'text': "Speed"}))
     st.plotly_chart(fig)
-    st.components.v1.html(result, width=1000, height=800, scrolling=True)
