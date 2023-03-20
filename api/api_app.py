@@ -4,9 +4,9 @@ import pickle
 import joblib
 from pydantic import BaseModel
 app = FastAPI()
-@app.get("/hello")
-def test():
-    return 'hello'
+@app.get("/")
+async def test():
+    return {'message':"Η τεχνητή νοημοσύνη θα κυριαρχήσει στον άνθρωπο "}
 
 # with open('explainer.pkl', 'rb') as f:
 #     explainer = pickle.load(f)
