@@ -13,3 +13,15 @@ This project involves developing a <b>credit scoring</b> tool for the financial 
 The scoring tool must calculate the <b>probability that a customer will repay their loan</b> and <b>classify</b> the application as <b>approved</b> or <b>denied</b>.
 
 The company also wants to develop an <b>interactive dashboard</b> for customer relationship managers to <b>transparently explain credit approval decisions</b> and enable customers to easily access and explore their personal information.
+
+## Built With
+
+ 📍 <b>Jupyter Notebook</b> : web-based interactive computing environment <br>
+
+ 📍 <b>PyCharm</b> : An integrated development environment (IDE) used for programming in Python.<br>
+
+ 📍 <b>FastAPI</b> : web framework for building APIs with Python <br>
+
+ 📍 <b>MLflow</b> :An open source platform for the complete machine learning lifecycle<br>
+
+ 📍 <b>Heroku</b> : A cloud-based platform that allows developers to deploy, manage, and scale their applications
