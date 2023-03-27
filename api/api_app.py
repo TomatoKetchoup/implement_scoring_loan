@@ -6,7 +6,7 @@ from pydantic import BaseModel
 app = FastAPI()
 
 
-with open('C:/Users/td/implement_scoring_loan/api/explainer.pkl', 'rb') as f:
+with open('explainer.pkl', 'rb') as f:
     explainer = pickle.load(f)
 
 with open('selected_feature_names.pkl', 'rb') as f:
