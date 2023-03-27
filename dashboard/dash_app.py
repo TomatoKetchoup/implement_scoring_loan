@@ -6,7 +6,7 @@ import pandas as pd
 import streamlit as st
 import os
 
-df = pd.read_csv('C:/Users/td/implement_scoring_loan/api/df_api.csv', nrows= 10)
+df = pd.read_csv('api/df_api.csv', nrows= 10)
 
 st.title('🔮Dashboard 🔮')
 # Taking id client input
