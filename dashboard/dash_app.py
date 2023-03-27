@@ -6,11 +6,11 @@ import pandas as pd
 import streamlit as st
 import os
 
-df = pd.read_csv('api/df_api.csv', nrows= 10)
+# df = pd.read_csv('C:/Users/td/implement_scoring_loan/api/df_api.csv', nrows= 10)
 
 st.title('🔮Dashboard 🔮')
 # Taking id client input
-options = np.unique(df['SK_ID_CURR'])
+options = np.unique([100003,100005])
 id_client = st.sidebar.selectbox('Customer id', options)
 
 st.sidebar.write('Gender')
@@ -48,18 +48,21 @@ if st.sidebar.button('👉🏽 GoGoGo'):
     fig_income, ax = plt.subplots()
     ax.hist(df['AMT_INCOME_TOTAL'], bins=10)
     ax.set_xlabel('INCOME')
+    ax.axvline(x=financial['income'][index_client], color='red')
     g1.pyplot(fig_income)
 
     # Afficher l'histogramme pour AMT_CREDIT
     fig_credit, ax = plt.subplots()
     ax.hist(df['AMT_CREDIT'], bins=10)
     ax.set_xlabel('CREDIT')
+    ax.axvline(x=financial['credit'][index_client], color='red')
     g2.pyplot(fig_credit)
 
     # Afficher l'histogramme pour AMT_ANNUITY
     fig_annuity, ax = plt.subplots()
     ax.hist(df['AMT_ANNUITY'], bins=10)
-    ax.set_xlabel('ANNUNITY')
+    ax.set_xlabel('ANNUITY')
+    ax.axvline(x=financial['annuity'][index_client], color='red')
     g3.pyplot(fig_annuity)
 
     ## Request local feature importance
