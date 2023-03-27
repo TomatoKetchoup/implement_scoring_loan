@@ -1,22 +1,10 @@
-import streamlit as st
-import json
+
 import requests
-import lime
-import tempfile
 import numpy as np
-from PIL import Image
-import io
 import matplotlib.pyplot as plt
-import streamlit.components.v1 as components
-import pickle
 import pandas as pd
-import streamlit.components.v1 as components
-import html
-import pydeck as pdk
-import json
 import streamlit as st
-from pydantic import BaseModel
-import plotly.graph_objs as go
+import os
 
 df = pd.read_csv('C:/Users/td/implement_scoring_loan/api/df_api.csv', nrows= 10)
 
@@ -32,15 +20,21 @@ if df[df['SK_ID_CURR']== id_client]['CODE_GENDER'].any() == 0:
 else :
     st.sidebar.markdown('<img src="https://img.icons8.com/color/48/null/checked-user-female.png"/>',unsafe_allow_html=True)
 
-url = 'http://127.0.0.1:8000/'
+if os.environ.get('IS_HEROKU', '') != '':
+    # Vous êtes en production sur Heroku, utilisez la variable d'environnement pour définir le chemin d'accès à votre fichier CSV
+    path = ('https://apiscoringloan-tomatoketchoup.herokuapp.com')
+else:
+    # Vous êtes en train de travailler localement, utilisez le chemin de fichier local
+    path = 'http://127.0.0.1:8000/'
+
 
 
 if st.sidebar.button('👉🏽 GoGoGo'):
     id_client = int(id_client)
     inputs = {"customer": id_client}
     index_client = str(df[df['SK_ID_CURR'] == id_client].index[0])
-    ## Request for financial information
-    financial = requests.post(url= (url+'financial'), json = inputs)
+    ## Requests
+    financial = requests.post(url= (path+'financial'), json = inputs)
     financial = financial.json()
 
     m1, m2,m3= st.columns((1, 1,1,))
@@ -69,25 +63,38 @@ if st.sidebar.button('👉🏽 GoGoGo'):
     g3.pyplot(fig_annuity)
 
     ## Request local feature importance
-    response = requests.post(url=('http://127.0.0.1:8000/local_importance'), json=inputs)
-    result = response.json()
-    feature_names = result['features']
-    importances = result['importances']
-    df_features_importance = pd.DataFrame(list(zip(feature_names, importances)), columns=['Features', 'Importance'])
-    df_features_importance = df_features_importance.sort_values(by=['Importance'], ascending=True)
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.barh(range(len(df_features_importance)), df_features_importance['Importance'], align='center')
-    ax.set_yticks(range(len(df_features_importance)))
-    ax.set_yticklabels(df_features_importance['Features'])
-    ax.set_ylabel('Feature')
-    ax.set_xlabel('Importance')
-    ax.set_title('Feature Importances')
-    # Afficher le plot bar dans Streamlit
-    st.pyplot(fig)
-    result_proba = result['probabilities']
-    fig = go.Figure(go.Indicator(
-        mode="gauge+number",
-        value=result_proba[0],
-        domain={'x': [0, 1], 'y': [0, 1]},
-        title={'text': "Speed"}))
-    st.plotly_chart(fig)
+    # response = requests.post(url=('http://127.0.0.1:8000/local_importance'), json=inputs)
+    # result = response.json()
+    # feature_names = result['features']
+    # importances = result['importances']
+    # df_features_importance = pd.DataFrame(list(zip(feature_names, importances)),
+    #                                       columns=['Features', 'Importance'])
+    # df_features_importance = df_features_importance.sort_values(by=['Importance'],
+    #                                                             ascending=True)
+    #
+    # fig, ax = plt.subplots(figsize=(10, 6))
+    # ax.barh(range(len(df_features_importance)),
+    #         df_features_importance['Importance'],
+    #         align='center')
+    # ax.set_yticks(range(len(df_features_importance)))
+    # ax.set_yticklabels(df_features_importance['Features'])
+    # ax.set_ylabel('Feature')
+    # ax.set_xlabel('Importance')
+    # ax.set_title('Feature Importances')
+    #
+    # # Afficher le plot bar dans Streamlit
+    # st.pyplot(fig)
+    # result_proba = result['probabilities']
+    # fig = go.Figure(go.Indicator(
+    #     mode="gauge+number",
+    #     value=result_proba[0],
+    #     domain={'x': [0, 1], 'y': [0, 1]},
+    #     title={'text': "Speed"}))
+    # st.plotly_chart(fig)
+    # result_proba = result['probabilities']
+    # fig = go.Figure(go.Indicator(
+    #     mode="gauge+number",
+    #     value=result_proba[0],
+    #     domain={'x': [0, 1], 'y': [0, 1]},
+    #     title={'text': "Speed"}))
+    # st.plotly_chart(fig)
