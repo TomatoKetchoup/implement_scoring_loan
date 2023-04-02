@@ -12,13 +12,13 @@ import plotly.graph_objs as go
 if os.environ.get('IS_HEROKU', '') != '':
     # Vous êtes en production sur Heroku, utilisez la variable d'environnement pour définir le chemin d'accès à votre fichier CSV
     path_request = 'https://apiscoringloan-tomatoketchoup.herokuapp.com/'
-    path_df = path = 'https://raw.githubusercontent.com/TomatoKetchoup/implement_scoring_loan/main/dashboard/'
+    path_df = 'https://raw.githubusercontent.com/TomatoKetchoup/implement_scoring_loan/main/dashboard/'
 
 else:
     # Vous êtes en train de travailler localement, utilisez le chemin de fichier local
     path_request = 'http://127.0.0.1:8000/'
     path_df = 'C:/Users/td/implement_scoring_loan/dashboard/'
-
+path_df = 'https://raw.githubusercontent.com/TomatoKetchoup/implement_scoring_loan/main/dashboard/'
 df = pd.read_csv(path_df+'df_api.csv', nrows= 10)
 
 
