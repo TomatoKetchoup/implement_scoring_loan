@@ -9,7 +9,7 @@ import plotly.graph_objs as go
 
 
 
-if os.environ.get('IS_HEROKU', '') != '':
+if 'DYNO' in os.environ:
     # Vous êtes en production sur Heroku, utilisez la variable d'environnement pour définir le chemin d'accès à votre fichier CSV
     path_request = 'https://apiscoringloan-tomatoketchoup.herokuapp.com/'
     path_df = 'https://raw.githubusercontent.com/TomatoKetchoup/implement_scoring_loan/main/dashboard/'
