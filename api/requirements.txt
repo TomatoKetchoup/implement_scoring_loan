@@ -9,3 +9,4 @@ gunicorn
 lime
 dill
 imblearn
+lightgbm
