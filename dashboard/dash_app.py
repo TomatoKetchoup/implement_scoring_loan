@@ -16,8 +16,8 @@ if os.environ.get('IS_HEROKU', '') != '':
 
 else:
 # Vous êtes en train de travailler localement, utilisez le chemin de fichier local
-    path_request = 'https://apiscoringloan-tomatoketchoup.herokuapp.com/'
-    path_df = 'https://raw.githubusercontent.com/TomatoKetchoup/implement_scoring_loan/main/dashboard/'
+    path_request = 'http://localhost:8000/'
+    path_df = 'C:/Users/td/implement_scoring_loan/dashboard/'
 
 df = pd.read_csv(path_df+'df_api.csv', nrows= 10)
 
