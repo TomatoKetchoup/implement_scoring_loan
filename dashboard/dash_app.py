@@ -16,7 +16,7 @@ else:
     # Vous êtes en train de travailler localement, utilisez le chemin de fichier local
     path = 'http://127.0.0.1:8000/'
 
-
+path = ('https://apiscoringloan-tomatoketchoup.herokuapp.com')
 df = pd.read_csv('df_api.csv', nrows= 10)
 
 
