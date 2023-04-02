@@ -39,7 +39,7 @@ if st.sidebar.button('👉🏽 GoGoGo'):
     index_client = df[df['SK_ID_CURR'] == id_client].index[0]
     features = df.iloc[index_client].to_dict()
     # Send data to Fastapi
-    response = requests.post("http://localhost:8000/prediction", json=features)
+    response = requests.post(path, json=features)
     # Afficher la réponse de FastAPI
 
     result = response.json()
