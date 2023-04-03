@@ -1,11 +1,11 @@
-from api.api_app import app
+from api.api_app import read_main
 import json
 import pathlib
-
-api_dir = pathlib.Path(__file__).parent.parent.parent.resolve()
+from fastapi.testclient import TestClient
+api_dir = pathlib.Path(__file__).parent.resolve()
 print(api_dir)
 
-client = TestClient(app)
+client = TestClient(read_main)
 def test_read_main():
     response = client.get("/test")
     assert response.status_code == 200
