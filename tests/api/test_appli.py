@@ -2,7 +2,7 @@ from api.api_app import app
 import json
 import pathlib
 
-api_dir = pathlib.Path(__file__).parent.parent.resolve()
+api_dir = pathlib.Path(__file__).parent.parent.parent.resolve()
 print(api_dir)
 
 client = TestClient(app)
