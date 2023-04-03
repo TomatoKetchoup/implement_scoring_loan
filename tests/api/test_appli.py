@@ -2,6 +2,9 @@ from fastapi.testclient import TestClient
 from api.api_app import app
 import json
 import pathlib
+import sys
+sys.path.insert(0, str(api_dir.parent))
+
 api_dir = pathlib.Path(__file__).parent.resolve()
 print(api_dir)
 
