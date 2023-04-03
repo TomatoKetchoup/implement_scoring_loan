@@ -1,6 +1,9 @@
 from fastapi.testclient import TestClient
-from api_app import app
+from api.api_app import app
 import json
+import pathlib
+api_dir = pathlib.Path(__file__).parent.resolve()
+print(api_dir)
 
 client = TestClient(app)
 def test_read_main():
@@ -9,7 +12,7 @@ def test_read_main():
     assert response.json() == {"msg": "Hello World"}
 
 # import features to be tested
-with open('data_to_test.json', 'r') as f:
+with open(api_dir/'../data/data_to_test.json', 'r') as f:
     data_to_be_tested = json.load(f)
 
 def test_exp_score():
