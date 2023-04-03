@@ -8,7 +8,23 @@ on:
 jobs:
   build_deployment_api:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ "3.7" ]
     steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          pip install -r api/requirements.txt
+      - name: Test with pytest
+        run: |
+          pytest
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
