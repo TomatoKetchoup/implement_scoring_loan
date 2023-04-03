@@ -2,8 +2,6 @@ from fastapi.testclient import TestClient
 from api.api_app import app
 import json
 import pathlib
-import sys
-sys.path.insert(0, str(api_dir.parent))
 
 api_dir = pathlib.Path(__file__).parent.resolve()
 print(api_dir)
@@ -19,9 +17,6 @@ with open(api_dir/'../data/data_to_test.json', 'r') as f:
     data_to_be_tested = json.load(f)
 
 def test_exp_score():
-    response = client.post('/prediction', json=data_to_be_tested)
+    response = client.post(api_dir+'/prediction', json=data_to_be_tested)
 
     assert response.status_code == 200
-
-
-
