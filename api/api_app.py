@@ -3,14 +3,25 @@ from fastapi import FastAPI
 import pickle
 import joblib
 from pydantic import BaseModel
+import pathlib
+import sys
 
 app = FastAPI()
+api_dir = pathlib.Path(__file__).resolve().parent
+sys.path.append(str(api_dir))
 
+# ## TODO DROP
+@app.get("/test")
+async def read_main():
+    return {"msg": "Hello World"}
 
-with open('explainer.pkl', 'rb') as f:
+################################### END
+
+with open(api_dir.joinpath('explainer.pkl'), 'rb') as f:
     explainer = pickle.load(f)
-model_saved = joblib.load('scoring_loan.joblib')
-pipeline_selecting_feature =  model_saved.named_steps['feature_selection']
+
+model_saved = joblib.load(api_dir.joinpath('scoring_loan.joblib'))
+pipeline_selecting_feature = model_saved.named_steps['feature_selection']
 class UserInput(BaseModel):
     features_dict: dict
 @app.post("/prediction")
