@@ -1,8 +1,7 @@
 import sys
 import os
 from fastapi.testclient import TestClient
-import json
-import pathlib
+import lime
 
 # Ajouter le chemin absolu du répertoire contenant l'application
 api_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'api'))
@@ -23,4 +22,8 @@ def test_read_main():
     assert response.status_code == 200
     assert response.json() == {"msg": "Hello World"}
 
+def test_api_prediction():
+    response = client.get('/prediction')
+    assert response.status_code == 200
+    assert response['explainer_proba']
 

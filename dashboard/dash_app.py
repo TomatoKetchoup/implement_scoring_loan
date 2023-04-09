@@ -1,14 +1,17 @@
 
-import requests
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-import streamlit as st
 import os
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import plotly.graph_objs as go
-
-
-
+import requests
+import streamlit as st
+import pathlib
+import json
+import numpy as np
+dash_dir = pathlib.Path(__file__).parent.resolve()
+print(dash_dir)
 if 'DYNO' in os.environ:
     # Vous êtes en production sur Heroku, utilisez la variable d'environnement pour définir le chemin d'accès à votre fichier CSV
     path_request = 'https://apiscoringloan-tomatoketchoup.herokuapp.com/'
@@ -17,37 +20,37 @@ if 'DYNO' in os.environ:
 else:
 # Vous êtes en train de travailler localement, utilisez le chemin de fichier local
     path_request = 'http://localhost:8000/'
+    # path_df = dash_dir/'dashboard/'
     path_df = 'C:/Users/td/implement_scoring_loan/dashboard/'
-
-df = pd.read_csv(path_df+'df_api.csv', nrows= 10)
-
+# TODO CHANGE NUMBER OF ROWS
+df = pd.read_csv(path_df+'data_test_dash.csv', nrows= 10)
 
 st.title('🔮Dashboard 🔮')
 # Taking id client input
 options = np.unique(df['SK_ID_CURR'])
 id_client = st.sidebar.selectbox('Customer id', options)
 
-st.sidebar.write('Gender')
-if df[df['SK_ID_CURR']== id_client]['CODE_GENDER'].any() == 0:
-    st.sidebar.markdown('<img src="https://img.icons8.com/color/48/null/checked-user-male.png"/>',
-                        unsafe_allow_html=True)
-else :
-    st.sidebar.markdown('<img src="https://img.icons8.com/color/48/null/checked-user-female.png"/>',unsafe_allow_html=True)
-
 
 if st.sidebar.button('👉🏽 GoGoGo'):
-    # Get data from df to send to Fastapi
     id_client = int(id_client)
-    index_client = df[df['SK_ID_CURR'] == id_client].index[0]
-    features = df.iloc[index_client].to_dict()
-    # Send data to Fastapi1`
-    response = requests.post(path_request+'prediction', json=features)
+    st.sidebar.write('Gender')
+    if df[df['SK_ID_CURR'] == id_client]['CODE_GENDER'].any() == 0:
+        st.sidebar.markdown('<img src="https://img.icons8.com/color/48/null/checked-user-male.png"/>',
+                            unsafe_allow_html=True)
+    else:
+        st.sidebar.markdown('<img src="https://img.icons8.com/color/48/null/checked-user-female.png"/>',
+                            unsafe_allow_html=True)
 
-    # Afficher la réponse de FastAPI
+    # Get data from df to send to Fastapi
+    index_client = df[df['SK_ID_CURR'] == id_client].index[0]
+    features = df.iloc[index_client]
+    features = features.fillna('missing').to_dict()
+
+    # Send data to Fastapi`
+    response = requests.post(path_request+'prediction', json=features)
 
     result = response.json()
     # Get predict proba from Fastapi
-    exp_score = result['model reliability']
 
     if result['predict_proba'][0]>result['predict_proba'][1]:
         color = 'green'
@@ -57,15 +60,19 @@ if st.sidebar.button('👉🏽 GoGoGo'):
         color = 'red'
         image_url = "https://img.icons8.com/external-justicon-lineal-color-justicon/64/null/external-storm-spring-season-justicon-lineal-color-justicon.png"
     st.image(image_url)
-    st.write(f"Prediction reliability: {exp_score:.2f}")
-    st.progress(exp_score)
+
     fig = go.Figure(go.Indicator(
         mode="gauge+number",
-        title = 'Probability of payment default',
-        value=result['predict_proba'][1]*100,
-        gauge= {'bar': {'color': color}},
-        number={'suffix': "%", 'valueformat': '.2f'},
-        domain={'x': [0, 1], 'y': [0, 1]}))
+        title="Probability of payment default",
+        value=result["predict_proba"][1] * 100,
+        gauge={
+            "axis": {"range": [0, 100]},
+            "bar": {"color": "red"}
+        },
+        number={"suffix": "%", "valueformat": ".2f"},
+        domain={"x": [0, 1], "y": [0, 1]}
+    ))
+
     st.plotly_chart(fig)
 
 
