@@ -12,7 +12,7 @@ api_dir = pathlib.Path(__file__).resolve().parent
 sys.path.append(str(api_dir))
 # api_dir = pathlib.Path(__file__).resolve().parent
 # sys.path.append(str(api_dir))
-
+app = FastAPI()
 # Simple unit test
 @app.get("/test")
 async def read_main():
