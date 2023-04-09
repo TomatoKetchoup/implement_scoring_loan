@@ -15,8 +15,12 @@ client = TestClient(app)
 
 # Data to test
 data_file = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/data_to_test.json'))
+exp_dict= os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/exp_test.json'))
 with open(data_file, 'r') as f:
     data_to_test = json.load(f)
+
+with open(exp_dict, 'r') as f:
+    exp_dict = json.load(f)
 
 def test_read_main():
     response = client.get("/test")
@@ -26,4 +30,4 @@ def test_read_main():
 def test_api_prediction():
     response = client.post('/prediction', json=data_to_test)
     assert response.status_code == 200
-    assert 'predict_proba' in response.json()
+    assert response.json()['predict_proba'] == exp_dict
