@@ -9,9 +9,9 @@ import numpy as np
 
 
 app = FastAPI()
-
-api_dir = pathlib.Path(__file__).resolve().parent
-sys.path.append(str(api_dir))
+parent_dir = pathlib.Path(__file__).resolve().parent
+# api_dir = pathlib.Path(__file__).resolve().parent
+# sys.path.append(str(api_dir))
 
 # Simple unit test
 @app.get("/test")
@@ -26,11 +26,13 @@ async def read_main():
 # with open(("preprocessor.pkl"), "rb") as f:
 #     preprocessor = pickle.load(f)
 
-with open(api_dir.joinpath('explainer.pkl'), 'rb') as f:
+with open(parent_dir / 'explainer.pkl', 'rb') as f:
     explainer = pickle.load(f)
-with open(api_dir.joinpath("pipe_prod.dill"), "rb") as f:
+
+with open(parent_dir / 'pipe_prod.dill', 'rb') as f:
     pipe_prod = dill.load(f)
-with open(api_dir.joinpath("preprocessor.pkl"), "rb") as f:
+
+with open(parent_dir / 'preprocessor.pkl', 'rb') as f:
     preprocessor = pickle.load(f)
 
 @app.post("/prediction")
