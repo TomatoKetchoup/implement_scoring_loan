@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI
 import pickle
 import pandas as pd
@@ -10,22 +9,29 @@ import numpy as np
 
 
 app = FastAPI()
-api_dir = pathlib.Path(__file__).resolve().parent
-sys.path.append(str(api_dir))
 
-# ## TODO DROP
+# api_dir = pathlib.Path(__file__).resolve().parent
+# sys.path.append(str(api_dir))
+
+# Simple unit test
 @app.get("/test")
 async def read_main():
     return {"msg": "Hello World"}
 
-################################### END
-
-with open(api_dir.joinpath('explainer.pkl'), 'rb') as f:
+### End simple test
+with open(('explainer.pkl'), 'rb') as f:
     explainer = pickle.load(f)
-with open(api_dir.joinpath("pipe_prod.dill"), "rb") as f:
+with open(("pipe_prod.dill"), "rb") as f:
     pipe_prod = dill.load(f)
-with open(api_dir.joinpath("preprocessor.pkl"), "rb") as f:
+with open(("preprocessor.pkl"), "rb") as f:
     preprocessor = pickle.load(f)
+
+# with open(api_dir.joinpath('explainer.pkl'), 'rb') as f:
+#     explainer = pickle.load(f)
+# with open(api_dir.joinpath("pipe_prod.dill"), "rb") as f:
+#     pipe_prod = dill.load(f)
+# with open(api_dir.joinpath("preprocessor.pkl"), "rb") as f:
+#     preprocessor = pickle.load(f)
 
 @app.post("/prediction")
 async def recevoir_dictionnaire(features : Dict):
