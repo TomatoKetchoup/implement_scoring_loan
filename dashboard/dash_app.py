@@ -1,17 +1,13 @@
-
 import os
-
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import plotly.graph_objs as go
 import requests
 import streamlit as st
 import pathlib
-import json
 import numpy as np
-dash_dir = pathlib.Path(__file__).parent.resolve()
-print(dash_dir)
+# dash_dir = pathlib.Path(__file__).parent.resolve()
+# print(dash_dir)
 if 'DYNO' in os.environ:
     # Vous êtes en production sur Heroku, utilisez la variable d'environnement pour définir le chemin d'accès à votre fichier CSV
     path_request = 'https://apiscoringloan-tomatoketchoup.herokuapp.com/'
@@ -25,7 +21,7 @@ else:
 # TODO CHANGE NUMBER OF ROWS
 df = pd.read_csv(path_df+'data_test_dash.csv', nrows= 10)
 
-st.title('🔮Dashboard 🔮')
+st.image('logo_dash.png')
 # Taking id client input
 options = np.unique(df['SK_ID_CURR'])
 id_client = st.sidebar.selectbox('Customer id', options)
@@ -54,12 +50,13 @@ if st.sidebar.button('👉🏽 GoGoGo'):
 
     if result['predict_proba'][0]>result['predict_proba'][1]:
         color = 'green'
-        image_url = 'https://img.icons8.com/emoji/48/null/bottle-with-popping-cork.png'
+        image_png = 'logo_congratulations.png'
     else :
         proba_class = (result['predict_proba'][1])*100
         color = 'red'
-        image_url = "https://img.icons8.com/external-justicon-lineal-color-justicon/64/null/external-storm-spring-season-justicon-lineal-color-justicon.png"
-    st.image(image_url)
+        image_png = "logo_sorry.png"
+    st.image(image_png)
+
 
     fig = go.Figure(go.Indicator(
         mode="gauge+number",
@@ -67,7 +64,7 @@ if st.sidebar.button('👉🏽 GoGoGo'):
         value=result["predict_proba"][1] * 100,
         gauge={
             "axis": {"range": [0, 100]},
-            "bar": {"color": "red"}
+            "bar": {"color": color}
         },
         number={"suffix": "%", "valueformat": ".2f"},
         domain={"x": [0, 1], "y": [0, 1]}
