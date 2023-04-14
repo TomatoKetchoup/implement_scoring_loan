@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/td/implement_scoring_loan/notebook/mlruns/931513959754137104/ad31c4f9ce704119b910791ca65e4a37/artifacts
+end_time: 1681392880682
+entry_point_name: ''
+experiment_id: '931513959754137104'
+lifecycle_stage: active
+run_id: ad31c4f9ce704119b910791ca65e4a37
+run_name: RandomForestClassifier()
+run_uuid: ad31c4f9ce704119b910791ca65e4a37
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1681392871267
+status: 3
+tags: []
+user_id: td

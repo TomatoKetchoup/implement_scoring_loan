@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/td/implement_scoring_loan/notebook/mlruns/931513959754137104/b3ea8c3b34bf46e1a77ebeaf50e2974b/artifacts
+end_time: 1681392549922
+entry_point_name: ''
+experiment_id: '931513959754137104'
+lifecycle_stage: active
+run_id: b3ea8c3b34bf46e1a77ebeaf50e2974b
+run_name: LGBMClassifier()
+run_uuid: b3ea8c3b34bf46e1a77ebeaf50e2974b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1681392534915
+status: 3
+tags: []
+user_id: td
