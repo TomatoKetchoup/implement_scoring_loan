@@ -55,7 +55,7 @@ The company also wants to develop an <b>interactive dashboard</b> for customer r
 
 📍 The explanation tool is used to identify the most important features that contributed to the prediction.
 
-![img.png](img.png)
+<img src=".logo_readme.png">
 
 ## Link to Heroku
 
