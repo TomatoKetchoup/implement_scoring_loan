@@ -58,5 +58,5 @@ The company also wants to develop an <b>interactive dashboard</b> for customer r
 <img src=".logo_readme.png">
 
 ## Link to Heroku
-
-https://dashscoringloan-tomatoketchoup.herokuapp.com
+https://dashscoringloan-tomatoketchoup.herokuapp.com<br>
+<img src=".logo_dash.png">
