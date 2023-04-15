@@ -21,7 +21,7 @@ else:
 # TODO CHANGE NUMBER OF ROWS
 df = pd.read_csv(path_df+'data_test_dash.csv', nrows= 10)
 
-st.title('DASHBOARD')
+st.image('logo_dash.png')
 # Taking id client input
 options = np.unique(df['SK_ID_CURR'])
 id_client = st.sidebar.selectbox('Customer id', options)
@@ -31,9 +31,11 @@ if st.sidebar.button('👉🏽 GoGoGo'):
     id_client = int(id_client)
     st.sidebar.write('Gender')
     if df[df['SK_ID_CURR'] == id_client]['CODE_GENDER'].any() == 0:
-        st.sidebar.write('Man')
+        st.sidebar.markdown('<img src="https://img.icons8.com/color/48/null/checked-user-male.png"/>',
+                            unsafe_allow_html=True)
     else:
-        st.sidebar.write('Woman')
+        st.sidebar.markdown('<img src="https://img.icons8.com/color/48/null/checked-user-female.png"/>',
+                            unsafe_allow_html=True)
 
     # Get data from df to send to Fastapi
     index_client = df[df['SK_ID_CURR'] == id_client].index[0]
@@ -48,12 +50,12 @@ if st.sidebar.button('👉🏽 GoGoGo'):
 
     if result['predict_proba'][0]>result['predict_proba'][1]:
         color = 'green'
-        texte = 'Congratulations'
+        image_png = 'logo_congratulations.png'
     else :
         proba_class = (result['predict_proba'][1])*100
         color = 'red'
-        texte = "not today, sorry"
-    st.write(texte)
+        image_png = "logo_sorry.png"
+    st.image(image_png)
 
 
     fig = go.Figure(go.Indicator(
