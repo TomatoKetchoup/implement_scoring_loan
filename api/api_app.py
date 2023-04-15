@@ -41,8 +41,7 @@ async def recevoir_dictionnaire(features : Dict):
         #Feature importance
         feature_importance = [t[1] for t in exp.as_map()[1]]
         selected_indices = [t[0] for t in exp.as_map()[1]]
-        feature_names = preprocessor.feature_names_in_[selected_indices].tolist()
-
+        feature_names = pipe_prod.named_steps['preprocessor'].get_feature_names_out()[selected_indices].tolist()
 
         return { 'predict_proba':explainer_proba,'importance':feature_importance, 'feature_names':feature_names}
 

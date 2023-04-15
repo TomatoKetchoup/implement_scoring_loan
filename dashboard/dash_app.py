@@ -27,7 +27,7 @@ options = np.unique(df['SK_ID_CURR'])
 id_client = st.sidebar.selectbox('Customer id', options)
 
 
-if st.sidebar.button('👉🏽 GoGoGo'):
+if st.sidebar.button('GoGoGo'):
     id_client = int(id_client)
     st.sidebar.write('Gender')
     if df[df['SK_ID_CURR'] == id_client]['CODE_GENDER'].any() == 0:
@@ -105,6 +105,7 @@ if st.sidebar.button('👉🏽 GoGoGo'):
 
     # Feature importance
     df_features_importance = pd.DataFrame({'Features': result['feature_names'], 'Importance': result['importance']})
+    df_features_importance = df_features_importance.sort_values(by='Importance', ascending=False)
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.barh(range(len(df_features_importance)),
             df_features_importance['Importance'],
