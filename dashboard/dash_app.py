@@ -21,7 +21,7 @@ else:
 # TODO CHANGE NUMBER OF ROWS
 df = pd.read_csv(path_df+'data_test_dash.csv', nrows= 10)
 
-st.image('logo_dash.png')
+st.image('logo_dash.ico')
 # Taking id client input
 options = np.unique(df['SK_ID_CURR'])
 id_client = st.sidebar.selectbox('Customer id', options)
