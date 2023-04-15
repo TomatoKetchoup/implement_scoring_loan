@@ -21,7 +21,7 @@ else:
 # TODO CHANGE NUMBER OF ROWS
 df = pd.read_csv(path_df+'data_test_dash.csv', nrows= 10)
 
-st.image('logo_dash.png')
+st.image(path_df+'logo_dash.png')
 # Taking id client input
 options = np.unique(df['SK_ID_CURR'])
 id_client = st.sidebar.selectbox('Customer id', options)
@@ -50,11 +50,11 @@ if st.sidebar.button('👉🏽 GoGoGo'):
 
     if result['predict_proba'][0]>result['predict_proba'][1]:
         color = 'green'
-        image_png = 'logo_congratulations.png'
+        image_png = path_df+'logo_congratulations.png'
     else :
         proba_class = (result['predict_proba'][1])*100
         color = 'red'
-        image_png = "logo_sorry.png"
+        image_png = path_df+"logo_sorry.png"
     st.image(image_png)
 
 
